@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Inserción de Peliculas";
+}
+
+<div class="container mt-3" style="max-width: 600px;">
+    <h2>Inserción de Peliculas</h2>
+    <hr />
+
+    @if (TempData["SuccessMessage_Peli"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage_Peli"]
+        </div>
+    }
+
+    <form asp-controller="Modulos" asp-action="PeliculaInsertar" method="post" enctype="multipart/form-data" asp-model="TmPelicula">
+        
+        <div class="mb-1">
+            <label for="nombrePeli" class="form-label">Titulo Pelicula</label>
+            <input type="text" class="form-control" id="nombrePeli" name="Titulo" placeholder="Nombre de la Pelicula" />
+        </div>
+        <div class="mb-1">
+            <label for="duracion" class="form-label">Duracion </label>
+            <div class="input-group">
+            <input type="number" class="form-control" id="duracion" name="Duracion" placeholder="Duracion en minutos" />
+            <span class="input-group-text">min</span>
+        </div>
+        </div>
+        <div class="mb-1">
+            <label for="clasificacion" class="form-label">Clasificacion </label>
+            <input type="text" class="form-control" id="clasificacion" name="Clasificacion" placeholder="Clasificacion" />
+        </div>
+        <div class="mb-1">
+            <label for="archivo" class="form-label">Imagen (JPEG o PNG solamente)</label>
+            <input type="file" class="form-control" id="archivo" name="Archivo" accept=".jpg, .jpeg, .png">
+        </div>
+        <div class="mb-1">
+            <label for="Director" class="form-label">Director </label>
+            <input type="text" class="form-control" id="Director" name="Director" placeholder="Director" />
+        </div>
+        <div class="mb-1">
+            <label for="Actores" class="form-label">Actores </label>
+            <input type="text" class="form-control" id="Actores" name="Actor" placeholder="Actores" />
+        </div>
+        <div class="mb-1">
+            <label for="descripcion" class="form-label">Descripcion </label>
+            <input type="text" class="form-control" id="descripcion" name="Descripcion" placeholder="descripcion" />
+        </div>
+        <div class="mb-1">
+            <label for="año" class="form-label">Año </label>
+            <select class="form-control" id="año" name="Año" placeholder="año">  </select>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Insertar Pelicula</button>
+    </form>
+
+</div>
+<script>
+    var yearDropdown = document.getElementById("año");
+    // Obtén el año actual
+    var currentYear = new Date().getFullYear();
+    var startYear = 2000;
+    var endYear = 2024;
+    // Agrega una opción por defecto
+    var defaultOption = document.createElement("option");
+    defaultOption.text = "Selecciona un año";
+    yearDropdown.add(defaultOption);
+    // Genera las opciones del año y agrega al elemento de selección
+    for (var year = startYear; year <= endYear; year++) {
+        var option = document.createElement("option");
+        option.value = year;
+        option.text = year;
+        yearDropdown.add(option);
+    }
+</script>

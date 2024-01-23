@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Inserción de Salas";
+}
+<div class="container mt-3" style="max-width: 600px;">
+    <h2>Inserción de Salas</h2>
+    <hr />
+
+    @if (TempData["SuccessMessage_Sala"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage_Sala"]
+        </div>
+    }
+
+    <form asp-controller="Modulos" asp-action="SalaInsertar" method="post" enctype="multipart/form-data" asp-model="TmSala">
+
+        <div class="mb-1">
+            <label for="numerosala" class="form-label">Numero sala </label>
+            <input type="number" class="form-control" id="numerosala" name="NumeroSala" placeholder="Entre 1 a 10 salas" required>
+        </div>
+        <div class="mb-1">
+            <label for="capacidadasiento" class="form-label">Capacidad de asientos </label>
+            <input type="number" class="form-control" id="capacidadasiento" name="CapacidadAsiento" placeholder="Debe ser 40 o 50 asientos" required />
+        </div>
+     
+        <br />
+        <button type="submit" class="btn btn-primary">Insertar Sala</button>
+    </form>
+
+</div>

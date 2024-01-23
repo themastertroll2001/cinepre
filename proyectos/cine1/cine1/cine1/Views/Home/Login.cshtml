@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+<style>
+    body {
+        background-color: #A7CCEB;
+    }
+    .form {
+        background-color: #33A4A7;
+        border-radius: 20px;
+        box-sizing: border-box;
+        height: 400px;
+        padding: 30px;
+        width: 600px;
+        
+    }
+</style>
+<div class="container mt-5 form">
+    <h2 class="text-center">Iniciar Sesión</h2>
+    <div class="mx-auto" style="max-width: 300px;">
+        @if (TempData["Errorlog"] != null)
+        {
+            <div class="alert alert-danger mb-3 text-center">
+                <h5>@TempData["Errorlog"].ToString()</h5>
+            </div>
+        }
+    </div>
+    
+    <form asp-controller="Cuenta" asp-action="Login" method="post">
+        <div class="mx-auto" style="max-width: 500px;">
+         
+            <div class="mb-3">
+                <label for="inputUsuario" class="form-label text-left">Nombre de Usuario o Correo</label>
+                <input type="text" class="form-control" id="inputUsuario" name="UsernameOrEmail" required>
+            </div>
+
+          
+            <div class="mb-3">
+                <label for="inputPassword" class="form-label text-left">Contraseña</label>
+                <input type="password" class="form-control" id="inputPassword" name="Password" required>
+            </div>
+
+           
+            <div class="mb-3 text-center">
+            <button type="submit" class="btn btn-primary mx-auto">Iniciar Sesión</button>
+            </div>
+        </div>
+    </form>
+
+    <p class="mt-3 text-center">¿No tienes una cuenta? <a asp-controller="Cuenta" asp-action="Registrarse">Regístrate aquí</a></p>
+    <p class="mt-3 text-center">¿No recuerdas tu Contraseña? <a asp-controller="Cuenta" asp-action="Recuperar">Olvidaste la Contraseña</a></p>
+</div>

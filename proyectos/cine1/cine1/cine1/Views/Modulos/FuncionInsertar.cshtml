@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Inserción de funciones";
+}
+<div class="container mt-3" style="max-width: 600px;">
+    <h2>Inserción de Funciones</h2>
+    <hr />
+
+    @if (TempData["SuccessMessage_Func"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage_Func"]
+        </div>
+    }
+
+    <form asp-controller="Modulos" asp-action="FuncionInsertar" method="post" enctype="multipart/form-data" asp-model="TdFuncion">
+
+        <div class="mb-1">
+            <label for="fecha" class="form-label">Fecha </label>
+            <input type="date" class="form-control" id="fecha" name="Fecha"  required>
+        </div>
+        <div class="mb-1">
+            <label for="horainicio" class="form-label">Hora Inicio </label>
+            <input type="time" class="form-control" id="horainicio" name="HoraInicio" required />
+        </div>
+        <div class="mb-1">
+            <label for="horafin" class="form-label">Hora Final </label>
+            <input type="time" class="form-control" id="horafin" name="HoraFin" required />
+        </div>
+        <div class="mb-1">
+            <label for="idPeli" class="form-label">Pelicula </label>
+            <select class="form-control" id="idPeli" name="IdPeli">
+                @foreach (var pelicula in ViewBag.Peliculas)
+                {
+                    <option value="@pelicula.Id">@pelicula.Titulo</option>
+                }
+            </select>
+        </div>
+        <div class="mb-1">
+            <label for="idSala" class="form-label">Numero sala </label>
+            <select class="form-control" id="idSala" name="IdSala">
+                @foreach (var sala in ViewBag.Salas)
+                {
+                    <option value="@sala.Id">@sala.NumeroSala</option>
+                }
+            </select>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Insertar Funcion</button>
+    </form>
+
+</div>

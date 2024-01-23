@@ -1,0 +1,102 @@
+﻿@model cine1.Models.TmPelicula
+@inject cine1.Models.BdCineContext _context
+@{
+    ViewData["Title"] = "Detalles de la Película";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .container {
+        margin-top: 20px;
+    }
+
+    .card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #f8f9fa; /* Color de fondo de la tarjeta */
+    }
+
+    .card-body {
+        padding: 50px; 
+    }
+        .card img {
+            width: 100%;
+            height: auto;
+        }
+    .list-group-item {
+        padding: 10px;
+        border: none;
+        background-color: #007bff; /* Color de fondo del elemento de lista */
+        color: #ffffff; /* Color del texto del elemento de lista */
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="@Model.RutaArchivo" class="img-fluid" alt="@Model.Titulo">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Titulo</h5>
+                    <p class="card-text">@Model.Descripcion</p>
+                    <p class="card-text"><strong>Tipo : </strong>@Model.Clasificacion</p>
+                    <p class="card-text"><strong>Duración:</strong> @Model.Duracion</p>         
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Director : </strong> @Model.Director</li>
+                    <li class="list-group-item"><strong>Actor : </strong> @Model.Actor</li>
+                    <li class="list-group-item"><strong>Año de Estreno : </strong> @Model.Año</li>
+                </ul>
+                <h5>Funciones asociadas:</h5>
+                <table class="table table-hover table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Hora de inicio</th>
+                            <th>Hora final</th>
+                            <th>Numero de sala</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var funcion in _context.TdFuncions.Where(f => f.IdPeli == Model.Id).ToList())
+                        {
+                            <tr>
+                                <td>@funcion.Fecha</td>
+                                <td>@funcion.HoraInicio</td>
+                                <td>@funcion.HoraFin</td>
+                                <td>@(_context.TmSalas.Find(funcion.IdSala)?.NumeroSala)</td>
+                                <td>
+                                    <form method="post" action="@Url.Action("ComprarBoletos", "Modulos")" class="d-inline">
+                                        <input type="hidden" name="idFuncion" value="@funcion.Id" />
+                                        <input type="hidden" name="idSala" value="@funcion.IdSala" />
+                                        <button type="submit" class="btn btn-primary">
+                                            Comprar Boletos
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="card-body">
+                    <br />
+                    <button type="submit" class="btn btn-primary">@Model.Año</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+
+            $("#tablaUsuarios tbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+    });
+
+</script>

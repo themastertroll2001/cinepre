@@ -1,0 +1,76 @@
+﻿@model List<cine1.Models.TdFuncion>
+@inject cine1.Models.BdCineContext _context
+@{
+    ViewData["Title"] = "Funciones";
+}
+<div class="container mt-5">
+    @if (TempData["SuccessMessage_Func"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage_Func"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage_Func"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage_Func"]
+        </div>
+    }
+    <br />
+    <input type="text" id="searchInput" class="form-control mb-3 shadow-sm" placeholder="Buscar...">
+    <br />
+    <br />
+    <div class="mb-3">
+        <a href="@Url.Action("FuncionInsertar", "Modulos")" class="btn btn-primary">
+            Registrar nueva funcion
+        </a>
+    </div>
+    <br />
+    <table id="tablaUsuarios" class="table table-hover table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Fecha</th>
+                <th>Hora de inicio</th>
+                <th>Hora final</th>
+                <th>Nombre de pelicula</th>
+                <th>Numero de sala</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var funcion in Model)
+            {
+                <tr>
+                    <td>@funcion.Fecha</td>
+                    <td>@funcion.HoraInicio</td>
+                    <td>@funcion.HoraFin</td>
+                    <td>@(_context.TmPeliculas.Find(funcion.IdPeli)?.Titulo)</td>
+                    <td>@(_context.TmSalas.Find(funcion.IdSala)?.NumeroSala)</td>
+                    <td>
+
+                        <form method="post" action="@Url.Action("EliminarFuncion", "Modulos")" class="d-inline">
+                            <input type="hidden" name="id" value="@funcion.Id" />
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar esta funcion?');">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+<script>
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+
+            $("#tablaUsuarios tbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+    });
+
+</script>

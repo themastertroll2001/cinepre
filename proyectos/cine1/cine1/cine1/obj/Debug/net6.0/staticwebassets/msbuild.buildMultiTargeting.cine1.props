@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\cine1.props" />
+</Project>

@@ -1,0 +1,88 @@
+﻿@model List<cine1.Models.TmPelicula>
+
+@{
+    ViewData["Title"] = "Cartelera";
+}
+
+@{
+    Layout = "_Layout";
+}
+<style>
+    body {
+        background-color: #B6C9E8; /* Color de fondo del cuerpo */
+    }
+
+    .carousel-inner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Hace que la imagen se ajuste sin deformarla */
+    }
+
+    .peli-card-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .peli-card {
+        transition: box-shadow 0.3s, transform 0.3s;
+    }
+
+        .peli-card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: scale(1.05);
+        }
+</style>
+<div class="container">
+    @*carrousel*@
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" style="width: 100%; max-width: none; max-height: 450px;">
+        <div class="carousel-inner" style="max-height: 450px;">
+            <div class="carousel-item active">
+                <img src="~/Img/tu-imagen-1.jpeg" class="d-block w-100" alt="Imagen 1" style="object-fit: contain; max-height: 100%; max-width: 100%;">
+            </div>
+            <div class="carousel-item">
+                <img src="~/Img/tu-imagen-2.jpeg" class="d-block w-100" alt="Imagen 2" style="object-fit: contain; max-height: 100%; max-width: 100%;">
+            </div>
+            <div class="carousel-item">
+                <img src="~/Img/tu-imagen-3.jpeg" class="d-block w-100" alt="Imagen 3" style="object-fit: contain; max-height: 100%; max-width: 100%;">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+</div>
+
+
+
+<div class="container text-center">
+    <h2 class="d-flex justify-content-center align-items-center">Peliculas Disponibles</h2>
+    <br />
+    <br />
+
+    <div class="row">
+        @foreach (var pelicula in Model)
+        {
+            <div class="col-md-4 mb-4 ">
+                <a href="@Url.Action("DetallePelicula", "Home", new { id = pelicula.Id })" class="card-link">
+                <div class="card peli-card">
+                    <div class=" peli-card-img">
+                        <img src="@pelicula.RutaArchivo" alt="@pelicula.Titulo">
+                    </div>
+                    <div class=" card-body">
+                        <h5 class=" d-flex justify-content-center align-items-center card-title">@pelicula.Titulo</h5>
+                        <p class=" d-flex justify-content-center align-items-center card-text"> @pelicula.Descripcion</p>
+                       
+                    </div>
+                </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
